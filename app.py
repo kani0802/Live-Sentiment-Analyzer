@@ -7,7 +7,7 @@ import nltk
 try:
     # Try to find it first, if not found, download it.
     nltk.data.find('sentiment/vader_lexicon.zip')
-except nltk.downloader.DownloadError:
+except AttributeError:
     nltk.download('vader_lexicon')
 
 # Initialize VADER
@@ -62,4 +62,5 @@ if st.button('Analyze Sentiment'):
         st.progress(scores['neg'])
 
     else:
+
         st.warning("Please paste some text to analyze!")
