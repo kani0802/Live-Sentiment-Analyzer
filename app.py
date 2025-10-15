@@ -10,10 +10,22 @@ if not os.path.exists(nltk_data_path):
     os.makedirs(nltk_data_path)
 nltk.data.path.append(nltk_data_path)
 
-try:
 
+try:
+  
     nltk.data.find('sentiment/vader_lexicon.zip')
-except AttributeError:
+except LookupError:
+ 
+    try:
+      
+        _create_unverified_https_context = ssl._create_unverified_context
+    except AttributeError:
+        
+        pass
+    else:
+       
+        ssl._create_default_https_context = _create_unverified_https_context
+        
     nltk.download('vader_lexicon')
 
 analyzer = SentimentIntensityAnalyzer()
@@ -69,4 +81,5 @@ if st.button('Analyze Sentiment'):
     else:
 
         st.warning("Please paste some text to analyze!")
+
 
